@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Do not go gentle into this good night. Rage.</title>
+    <link>https://embano1.github.io/</link>
+    <description>Recent content on Do not go gentle into this good night. Rage.</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>All rights reserved - 2017</copyright>
+    <lastBuildDate>Sun, 30 Jul 2017 20:10:28 +0200</lastBuildDate>
+    
+	<atom:link href="https://embano1.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>https://embano1.github.io/about/</link>
+      <pubDate>Sun, 30 Jul 2017 20:10:28 +0200</pubDate>
+      
+      <guid>https://embano1.github.io/about/</guid>
+      <description>Platform architect, who got hung up on distributed systems, Kubernetes and Go.
+Work: VMware
+Location: Germany
+Follow: @embano1 (beware, active tweeter ahead)</description>
+    </item>
+    
+    <item>
+      <title>Why would I want to blog?</title>
+      <link>https://embano1.github.io/post/hello/</link>
+      <pubDate>Sun, 30 Jul 2017 19:17:02 +0200</pubDate>
+      
+      <guid>https://embano1.github.io/post/hello/</guid>
+      <description>&amp;hellip;@bbrundert is the answer (to almost everything btw).
+Well, if it wasn´t Björn who finally kicked my &amp;lt;redacted&amp;gt;, I think I´d never started my own blog. I´m pretty active on Twitter (@embano1), and never felt the need to share more than 140 characters with the world. But I changed my view last week, after some glass of wine at Björn´s &amp;ldquo;Home Sweet Home&amp;rdquo;. Our discussion went like this:
+ &amp;lt;Bla bla Kubernetes bla bla&amp;hellip;&amp;gt;</description>
+    </item>
+    
+  </channel>
+</rss>

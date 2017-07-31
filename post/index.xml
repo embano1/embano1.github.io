@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Do not go gentle into this good night. Rage.</title>
+    <link>https://embano1.github.io/post/</link>
+    <description>Recent content in Posts on Do not go gentle into this good night. Rage.</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>All rights reserved - 2017</copyright>
+    <lastBuildDate>Sun, 30 Jul 2017 19:17:02 +0200</lastBuildDate>
+    
+	<atom:link href="https://embano1.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Why would I want to blog?</title>
+      <link>https://embano1.github.io/post/hello/</link>
+      <pubDate>Sun, 30 Jul 2017 19:17:02 +0200</pubDate>
+      
+      <guid>https://embano1.github.io/post/hello/</guid>
+      <description>&amp;hellip;@bbrundert is the answer (to almost everything btw).
+Well, if it wasn´t Björn who finally kicked my &amp;lt;redacted&amp;gt;, I think I´d never started my own blog. I´m pretty active on Twitter (@embano1), and never felt the need to share more than 140 characters with the world. But I changed my view last week, after some glass of wine at Björn´s &amp;ldquo;Home Sweet Home&amp;rdquo;. Our discussion went like this:
+ &amp;lt;Bla bla Kubernetes bla bla&amp;hellip;&amp;gt;</description>
+    </item>
+    
+  </channel>
+</rss>
