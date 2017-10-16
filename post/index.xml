@@ -23,6 +23,15 @@ It so happened to me last week, when I first discussed the topic of distributed 
     </item>
     
     <item>
+      <title>Hello Informers - What´s the difference?</title>
+      <link>https://embano1.github.io/post/k8s_informers/</link>
+      <pubDate>Sun, 30 Jul 2017 20:11:15 +0200</pubDate>
+      
+      <guid>https://embano1.github.io/post/k8s_informers/</guid>
+      <description>This post not only is about Kubernetes´ Client-Go SDK Informers, but also marks my first blog post ever. Celebration! Feel free to skip over my sentimental way of saying &amp;ldquo;Thank you&amp;rdquo; in the next paragraph and directly jump into a little bit of research on Client-Go Informers ;)</description>
+    </item>
+    
+    <item>
       <title>Why would I want to blog?</title>
       <link>https://embano1.github.io/post/hello/</link>
       <pubDate>Sun, 30 Jul 2017 19:17:02 +0200</pubDate>

@@ -12,15 +12,15 @@
 
 
 
-<meta name="twitter:title" content="Why would I want to blog?"/>
+<meta name="twitter:title" content="Hello Informers - What´s the difference?"/>
 <meta name="twitter:description" content=""/>
 <meta name="twitter:site" content="@embano1"/>
 
 
 
-  	<meta property="og:title" content="Why would I want to blog? &middot; Do not go gentle into this good night. Rage." />
+  	<meta property="og:title" content="Hello Informers - What´s the difference? &middot; Do not go gentle into this good night. Rage." />
   	<meta property="og:site_name" content="Do not go gentle into this good night. Rage." />
-  	<meta property="og:url" content="https://embano1.github.io/post/hello/" />
+  	<meta property="og:url" content="https://embano1.github.io/post/k8s_informers/" />
 
     
         
@@ -31,16 +31,15 @@
     
     <meta property="og:description" content="" />
   	<meta property="og:type" content="article" />
-    <meta property="article:published_time" content="2017-07-30T19:17:02&#43;02:00" />
+    <meta property="article:published_time" content="2017-07-30T20:11:15&#43;02:00" />
 
     
     
 
-    <title>Why would I want to blog? &middot; Do not go gentle into this good night. Rage.</title>
+    <title>Hello Informers - What´s the difference? &middot; Do not go gentle into this good night. Rage.</title>
 
     
-    <meta name="description" content="&amp;hellip;@bbrundert is the answer (to almost everything btw).
-Well, if it wasn´t Björn who finally kicked my &amp;lt;redacted&amp;gt;, I think I´d never started my own b" />
+    <meta name="description" content="This post not only is about Kubernetes´ Client-Go SDK Informers, but also marks my first blog post ever. Celebration! Feel free to skip over my sentimental way " />
     
 
     <meta name="HandheldFriendly" content="True" />
@@ -69,7 +68,7 @@ Well, if it wasn´t Björn who finally kicked my &amp;lt;redacted&amp;gt;, I thi
     
     <meta name="generator" content="Hugo 0.25.1" />
 
-    <link rel="canonical" href="https://embano1.github.io/post/hello/" />
+    <link rel="canonical" href="https://embano1.github.io/post/k8s_informers/" />
 
     
       
@@ -106,23 +105,23 @@ Well, if it wasn´t Björn who finally kicked my &amp;lt;redacted&amp;gt;, I thi
             
         ]
     },
-    "headline": Why would I want to blog?,
-    "name": Why would I want to blog?,
-    "wordCount": 345,
-    "timeRequired": "PT2M",
+    "headline": Hello Informers - What´s the difference?,
+    "name": Hello Informers - What´s the difference?,
+    "wordCount": 48,
+    "timeRequired": "PT1M",
     "inLanguage": {
       "@type": "Language",
       "alternateName": en
     },
-    "url": https://embano1.github.io/post/hello/,
-    "datePublished": 2017-07-30T19:17Z,
-    "dateModified": 2017-07-30T19:17Z,
+    "url": https://embano1.github.io/post/k8s_informers/,
+    "datePublished": 2017-07-30T20:11Z,
+    "dateModified": 2017-07-30T20:11Z,
     
     
     "description": ,
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": https://embano1.github.io/post/hello/
+        "@id": https://embano1.github.io/post/k8s_informers/
     }
 }
     </script>
@@ -204,12 +203,12 @@ Well, if it wasn´t Björn who finally kicked my &amp;lt;redacted&amp;gt;, I thi
   <article class="post post">
 
     <header class="post-header">
-        <h1 class="post-title">Why would I want to blog?</h1>
+        <h1 class="post-title">Hello Informers - What´s the difference?</h1>
         <small></small>
 
         <section class="post-meta">
         
-          <time class="post-date" datetime="2017-07-30T19:17:02&#43;02:00">
+          <time class="post-date" datetime="2017-07-30T20:11:15&#43;02:00">
             Jul 30, 2017
           </time>
         
@@ -218,28 +217,7 @@ Well, if it wasn´t Björn who finally kicked my &amp;lt;redacted&amp;gt;, I thi
     </header>
 
     <section class="post-content">
-      <p>&hellip;<a href="https://twitter.com/bbrundert">@bbrundert</a> is the answer (to almost everything btw).</p>
-
-<p>Well, if it wasn´t Björn who finally kicked my &lt;redacted&gt;, I think I´d never started my own blog. I´m pretty active on Twitter (@embano1), and never felt the need to share more than 140 characters with the world. But I changed my view last week, after some glass of wine at Björn´s &ldquo;Home Sweet Home&rdquo;. Our discussion went like this:</p>
-
-<blockquote>
-<p><em>&lt;Bla bla Kubernetes bla bla&hellip;&gt;</em><br />
-<strong>Björn:</strong> <em>Dude, you should have a blog!</em><br />
-<strong>Me:</strong> Man, I have no time! And I can´t really put together a good blog post, which is both, a funny read and interesting.<br />
-<strong>Björn:</strong> <em>May be, but the stuff you´re interested in and working on is really cool! It would be a shame if you´d not share it.</em><br />
-<strong>Me:</strong> (thinking)<br />
-<strong>Björn:</strong> <em>This Kubernetes Informers stuff you just told me. Is this something everyone knows about?</em><br />
-<strong>Me:</strong> Well, I don´t know. Perhaps no one cares about?<br />
-<strong>Björn:</strong> <em>I don´t think so. Just write it down. Doesn´t have to be a book! Just your thoughts, findings, etc.</em><br />
-<strong>Me:</strong> Sounds easy. And actually I see more and more people start writing custom Kubernetes controllers (#FTW!). Last week I had an interesting discussion with a developer from HolidayCheck24. We helped out each other and may be this could be my first blog post?<br />
-<em>&lt;More wine&hellip;and then it got late again&gt;</em></p>
-</blockquote>
-
-<p>So this got me thinking over the weekend. It takes a lot of time (for me as a non-native English writer) to put together a post. I do a lot of research on the matter, want to be precise and provide value to the reader, i.e. picking a topic actually someone cares about but also has not already seen a million posts already. And it should not read like a robot from the 80s has written it.</p>
-
-<p>But I thought I´d give it a try. To quickly get started, I immediately used <a href="https://gohugo.io/getting-started/quick-start/">Hugo</a> (Go <em>cough</em>) and created a embano1.github.io repository. Fairly easy to get a blog these days, isn´t it?</p>
-
-<p>Enough sentimentality Michael, now show me the money&hellip;</p>
+      <p>This post not only is about Kubernetes´ Client-Go SDK Informers, but also marks my first blog post ever. Celebration! Feel free to skip over my sentimental way of saying &ldquo;Thank you&rdquo; in the next paragraph and directly jump into a little bit of research on Client-Go Informers ;)</p>
 
     </section>
 
@@ -278,19 +256,19 @@ Well, if it wasn´t Björn who finally kicked my &amp;lt;redacted&amp;gt;, I thi
     
 <section class="share">
   <h4>Share this post</h4>
-  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Why%20would%20I%20want%20to%20blog%3f&nbsp;-&nbsp;Do%20not%20go%20gentle%20into%20this%20good%20night.%20Rage.&amp;url=https%3a%2f%2fembano1.github.io%2fpost%2fhello%2f"
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Hello%20Informers%20-%20What%c2%b4s%20the%20difference%3f&nbsp;-&nbsp;Do%20not%20go%20gentle%20into%20this%20good%20night.%20Rage.&amp;url=https%3a%2f%2fembano1.github.io%2fpost%2fk8s_informers%2f"
       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
       <span class="hidden">Twitter</span>
   </a>
-  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fembano1.github.io%2fpost%2fhello%2f"
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fembano1.github.io%2fpost%2fk8s_informers%2f"
       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
       <span class="hidden">Facebook</span>
   </a>
-  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fembano1.github.io%2fpost%2fhello%2f&amp;description=Why%20would%20I%20want%20to%20blog%3f"
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fembano1.github.io%2fpost%2fk8s_informers%2f&amp;description=Hello%20Informers%20-%20What%c2%b4s%20the%20difference%3f"
       onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
       <span class="hidden">Pinterest</span>
   </a>
-  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fembano1.github.io%2fpost%2fhello%2f"
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fembano1.github.io%2fpost%2fk8s_informers%2f"
      onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
       <span class="hidden">Google+</span>
   </a>
@@ -314,13 +292,19 @@ Well, if it wasn´t Björn who finally kicked my &amp;lt;redacted&amp;gt;, I thi
 
   <aside class="read-next">
   
-      <a class="read-next-story" style="no-cover" href="https://embano1.github.io/post/k8s_informers/">
+      <a class="read-next-story" style="no-cover" href="https://embano1.github.io/post/vpa/">
           <section class="post">
-              <h2>Hello Informers - What´s the difference?</h2>
+              <h2>Kubernetes and the fine art of scaling - UP!</h2>
               
           </section>
       </a>
   
+  
+      <a class="read-next-story prev" style="no-cover" href="https://embano1.github.io/post/hello/">
+          <section class="post">
+              <h2>Why would I want to blog?</h2>
+          </section>
+      </a>
   
 </aside>
 
