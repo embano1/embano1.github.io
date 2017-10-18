@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>All rights reserved - 2017</copyright>
-    <lastBuildDate>Mon, 31 Jul 2017 22:17:38 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 17 Oct 2017 22:04:27 +0200</lastBuildDate>
     
 	<atom:link href="https://embano1.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>QoS, &#34;Node allocatable&#34; and the Kubernetes Scheduler</title>
+      <link>https://embano1.github.io/post/sched-reconcile/</link>
+      <pubDate>Tue, 17 Oct 2017 22:04:27 +0200</pubDate>
+      
+      <guid>https://embano1.github.io/post/sched-reconcile/</guid>
+      <description>What a title, sorry for that&amp;hellip;Weeks ago, I started a post about a customer question which came up during a workshop. I just didn´t find the time to finish it, because of &amp;hellip; other stuff. Also a BIG thanks to my Twitter fellows @bbrundert, @mhausenblas and @timoreimann for their review and feedback to improve this post. Make sure to follow them!
+Some useful background reading:  Managing Compute Resources for Containers How does the Kubernetes scheduler work?</description>
+    </item>
     
     <item>
       <title>Kubernetes and the fine art of scaling - UP!</title>
@@ -20,15 +30,6 @@
       <guid>https://embano1.github.io/post/vpa/</guid>
       <description>Do you know these days, when a certain topic you have thought about a while hits you again and again?
 It so happened to me last week, when I first discussed the topic of distributed runtime (read Kubernetes) optimization with Emad Benjamin, Chief Technologist/ Application Platforms at VMware (make sure to follow him on Twitter). The idea was mainly about day two operations for distributed systems written for and running on Kubernetes.</description>
-    </item>
-    
-    <item>
-      <title>Hello Informers - What´s the difference?</title>
-      <link>https://embano1.github.io/post/k8s_informers/</link>
-      <pubDate>Sun, 30 Jul 2017 20:11:15 +0200</pubDate>
-      
-      <guid>https://embano1.github.io/post/k8s_informers/</guid>
-      <description>This post not only is about Kubernetes´ Client-Go SDK Informers, but also marks my first blog post ever. Celebration! Feel free to skip over my sentimental way of saying &amp;ldquo;Thank you&amp;rdquo; in the next paragraph and directly jump into a little bit of research on Client-Go Informers ;)</description>
     </item>
     
     <item>

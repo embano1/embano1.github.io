@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="QoS, &#34;Node allocatable&#34; and the Kubernetes Scheduler"/>
+<meta name="twitter:description" content=""/>
+<meta name="twitter:site" content="@embano1"/>
+
+
+
+  	<meta property="og:title" content="QoS, &#34;Node allocatable&#34; and the Kubernetes Scheduler &middot; Do not go gentle into this good night. Rage." />
+  	<meta property="og:site_name" content="Do not go gentle into this good night. Rage." />
+  	<meta property="og:url" content="https://embano1.github.io/post/sched-reconcile/" />
+
+    
+        
+            <meta property="og:image" content="/none.jpg"/>
+        
+    
+
+    
+    <meta property="og:description" content="" />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2017-10-17T22:04:27&#43;02:00" />
+
+    
+    
+
+    <title>QoS, &#34;Node allocatable&#34; and the Kubernetes Scheduler &middot; Do not go gentle into this good night. Rage.</title>
+
+    
+    <meta name="description" content="What a title, sorry for that&amp;hellip;Weeks ago, I started a post about a customer question which came up during a workshop. I just didn´t find the time to finish" />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="https://embano1.github.io/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="https://embano1.github.io/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="https://embano1.github.io/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="https://embano1.github.io/css/nav.css" />
+
+    
+
+    
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/styles/default.min.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+        
+        <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+      
+          <link href="https://embano1.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Do not go gentle into this good night. Rage." />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.25.1" />
+
+    <link rel="canonical" href="https://embano1.github.io/post/sched-reconcile/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": ,
+        "logo": https://embano1.github.io/images/gopher.jpg
+    },
+    "author": {
+        "@type": "Person",
+        "name": ,
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": https://embano1.github.io/images/gopher.jpg,
+            "width": 250,
+            "height": 250
+        }, 
+        
+        "url": ,
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ]
+    },
+    "headline": QoS, &#34;Node allocatable&#34; and the Kubernetes Scheduler,
+    "name": QoS, &#34;Node allocatable&#34; and the Kubernetes Scheduler,
+    "wordCount": 2024,
+    "timeRequired": "PT10M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": en
+    },
+    "url": https://embano1.github.io/post/sched-reconcile/,
+    "datePublished": 2017-10-17T22:04Z,
+    "dateModified": 2017-10-17T22:04Z,
+    
+    
+    "description": ,
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": https://embano1.github.io/post/sched-reconcile/
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-108156810-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://embano1.github.io/about">About me</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://embano1.github.io/post">Blog</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="https://embano1.github.io/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+      <a class="blog-logo" href="https://embano1.github.io/"><img src="https://embano1.github.io/images/gopher.jpg" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">QoS, &#34;Node allocatable&#34; and the Kubernetes Scheduler</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2017-10-17T22:04:27&#43;02:00">
+            Oct 17, 2017
+          </time>
+        
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+      
+
+<p>What a title, sorry for that&hellip;Weeks ago, I started a post about a customer question which came up during a workshop. I just didn´t find the time to finish it, because of &hellip; other stuff.  Also a BIG thanks to my Twitter fellows @bbrundert, @mhausenblas and @timoreimann for their review and feedback to improve this post. Make sure to follow them!</p>
+
+<h2 id="some-useful-background-reading">Some useful background reading:</h2>
+
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/">Managing Compute Resources for Containers</a></li>
+<li><a href="https://jvns.ca/blog/2017/07/27/how-does-the-kubernetes-scheduler-work/">How does the Kubernetes scheduler work?</a></li>
+<li><a href="https://github.com/kubernetes/community/blob/0d25e180f3292a47f17600d84d9347bd01ad5309/contributors/devel/scheduler.md">The Kubernetes Scheduler</a></li>
+</ul>
+
+<h2 id="the-situation">The Situation</h2>
+
+<p>The customer was wondering why the &ldquo;Allocatable&rdquo; resources (CPU, MEM) on the Kubelet would not be reduced when he starts &ldquo;burstable&rdquo; or &ldquo;guaranteed&rdquo; pods, i.e. pods with resource requests specified. As you are probably aware, &ldquo;requests&rdquo; are enforced by the scheduler/Kubelet during admission in order to guarantee the requested resource(s). Let&rsquo;s use a short example (Minikube) to show what I&rsquo;m talking about. All examples and code snippets are based on <code>Kubernetes v1.7.8</code>.</p>
+
+<pre><code>~# kubectl describe node|grep -iA 3 allocatable
+Allocatable:
+ cpu:		4
+ memory:	3944188Ki
+ pods:		110
+ 
+~# for i in {1..10}; do kubectl run nginx${i} --image=nginx --requests 'cpu=0.5'; done
+deployment &quot;nginx1&quot; created
+deployment &quot;nginx2&quot; created
+deployment &quot;nginx3&quot; created
+...
+</code></pre>
+
+<p>We see that the node reports an allocatable capacity of 4 CPUs and we launch 10 pods, each with 0.5 CPU requests to see what happens when we exceed capacity.<br />
+Hint: You can also query the node information via the API server under <code>http://&lt;API_SERVER&gt;:8001/api/v1/nodes</code>.</p>
+
+<pre><code>~# kubectl get po
+NAME                      READY     STATUS    RESTARTS   AGE
+nginx1-288498491-63wxf    1/1       Running   0          26s
+nginx10-177349531-57mqp   0/1       Pending   0          24s
+nginx2-513090365-wb4bv    1/1       Running   0          26s
+nginx3-737682239-z5t7b    1/1       Running   0          26s
+nginx4-962274113-vgjm7    1/1       Running   0          26s
+nginx5-1186865987-f4k63   1/1       Running   0          25s
+nginx6-1411457861-340vs   1/1       Running   0          25s
+nginx7-1636049735-cc1n0   1/1       Running   0          25s
+nginx8-1860641609-d4zfm   0/1       Pending   0          24s
+nginx9-2085233483-mxsc6   0/1       Pending   0          24s
+
+~# kubectl get ev
+...
+23s       23s       1         nginx8                    Deployment                             Normal    ScalingReplicaSet   deployment-controller   Scaled up replica set nginx8-1860641609 to 1
+8s        23s       6         nginx9-2085233483-3f7x8   Pod                                    Warning   FailedScheduling    default-scheduler       No nodes are available that match all of the following predicates:: Insufficient cpu (1).
+...
+</code></pre>
+
+<p>Apparently, the scheduler is doing its job and refuses to schedule all pods onto this node because this would exceed the node capacity and break the resource guarantee (QoS). However, and this is what confused the customer, the node still reports 4 CPUs as allocatable:</p>
+
+<pre><code>~# kubectl describe node|grep -iA 3 allocatable
+Allocatable:
+ cpu:		4
+ memory:	3944188Ki
+ pods:		110 
+</code></pre>
+
+<h2 id="the-problem">The Problem</h2>
+
+<p>How does the scheduler know that it should not put more pods onto this node if the node reports sufficient resources? This is what we&rsquo;re going to answer in this post. Thanks to Kubernetes being open source, the code is the source of truth. Now, follow me into the rabbit hole of the Kubernetes scheduler&hellip;</p>
+
+<p>The customer looked into to API documentation and was assuming that the scheduler would use <code>Allocatable</code> during scheduling and admission. <a href="https://v1-7.docs.kubernetes.io/docs/api-reference/v1.7/#nodestatus-v1-core">&ldquo;NodeStatus v1 core&rdquo;</a> tells us that: &ldquo;<code>Allocatable represents the resources of a node that are available for scheduling. Defaults to Capacity</code>&rdquo;. But if <code>Allocatable</code> basically is a static field, where does the scheduler get the information about remaining capacity on the Kubelet? He could not find any other field in the API server (he even dug into etcd), so the customer&rsquo;s theory was that the scheduler would track <code>node.allocatable</code> locally for each Kubelet and add/subtract resource requests as pods get scheduled/terminate. Since it&rsquo;s the authoritative source of truth to make the binding of pods to a node (unless you run multiple schedulers, see note at the end of this post), doing the math would be easy, right? We&rsquo;re getting closer&hellip;</p>
+
+<p>But that would mean that the scheduler builds up local state. And as with many other components in the Kubernetes architecture, the (default) scheduler is supposed to be stateless, right? We should always assume it can crash (which it sometimes does, unfortunately). Building local state would mean, that the information about the actual allocated/remaining resources on the Kubelet is lost when the scheduler crashes/restarts. Eventually, we would break our QoS guarantee of <code>sum(requests.cpu) &lt; allocatable.cpu</code> (or memory) because of missing information after a crash.</p>
+
+<p>OK, but I can use leader election and run multiple instances of the default scheduler! Well, yes&hellip;no. Because there&rsquo;s no replication going on between these scheduler instances, the customer was back at the beginning. He even simulated what would happen when he kills the default scheduler pod. He was surprised to see that the <code>pending</code> pods, before he killed the scheduler, remained in <code>pending</code> state. Again, due to insufficient cpu resources. The scheduler works correctly and somehow must recall memories from before it was killed&hellip;</p>
+
+<h2 id="the-solution">The Solution</h2>
+
+<p>The Kubernetes engineers use a nice trick to reconcile state without having to track and persist all the resource information in a durable store, i.e. etcd. As you might be already aware of, Kubernetes controllers are event-driven and <a href="https://speakerdeck.com/thockin/edge-vs-level-triggered-logic">&ldquo;level-set&rdquo;</a>, meaning that they set watches on the API server and get notified when objects are added/updated/deleted (see <a href="https://engineering.bitnami.com/articles/a-deep-dive-into-kubernetes-controllers.html">&ldquo;A Deep Dive Into Kubernetes Controllers&rdquo;</a> for more information). Controllers persist this information in a local cache (<code>Store</code>) in order to reduce the load on the API server. When a controller starts, it registers watches (objects and events it&rsquo;s interested in) with the API server and does a full sync on initialization. So it can start from a consistent state or reconcile state in case it crashed. If you&rsquo;re interested in the details, stay with me&hellip;</p>
+
+<p>We start with the Run() function of the Scheduler struct. The scheduler remains in looping the scheduleOne() function until it shuts down/crashes. I reduced the code snippets to a minimum in order to ease reading. The main code lives inside <code>plugin/pkg/scheduler/</code> and subfolders.</p>
+
+<pre><code>// Run begins watching and scheduling. It waits for cache to be synced, then starts a goroutine and returns immediately.
+func (sched *Scheduler) Run() {
+	if !sched.config.WaitForCacheSync() {
+		return
+	}
+
+	go wait.Until(sched.scheduleOne, 0, sched.config.StopEverything)
+}
+</code></pre>
+
+<p><code>scheduleOne()</code> pulls the next pod from an in-memory FIFO queue (within the scheduler) and calls a (blocking) function <code>schedule(pod)</code> to find a fitting node, based on &ldquo;predicates&rdquo; and &ldquo;priorities&rdquo;. It&rsquo;s a two-step algorithm. First, nodes are filtered based on &ldquo;predicates&rdquo;, e.g. sufficient resources or certain labels. Second, the best node is selected, based on a scoring mechanism. You can read more about the process in <a href="https://github.com/kubernetes/community/blob/0d25e180f3292a47f17600d84d9347bd01ad5309/contributors/devel/scheduler.md">&ldquo;The Kubernetes Scheduler&rdquo;</a>.</p>
+
+<pre><code>// scheduleOne does the entire scheduling workflow for a single pod.  It is serialized on the scheduling algorithm's host fitting.
+func (sched *Scheduler) scheduleOne() {
+	pod := sched.config.NextPod()
+	...
+
+	// Synchronously attempt to find a fit for the pod.
+	start := time.Now()
+	suggestedHost, err := sched.schedule(pod)
+        ...
+}
+</code></pre>
+
+<p>The FIFO queue gets populated by <code>EventHandlers</code> in the <code>NewConfigFactory(...)</code> function.</p>
+
+<pre><code>func NewConfigFactory(...) {
+...
+// unscheduled pod queue
+	podInformer.Informer().AddEventHandler(
+		cache.FilteringResourceEventHandler{
+			FilterFunc: func(obj interface{}) bool {
+				switch t := obj.(type) {
+				case *v1.Pod:
+					return unassignedNonTerminatedPod(t)
+				default:
+					runtime.HandleError(fmt.Errorf(&quot;unable to handle object in %T: %T&quot;, c, obj))
+					return false
+				}
+			},
+			Handler: cache.ResourceEventHandlerFuncs{
+				AddFunc: func(obj interface{}) {
+					if err := c.podQueue.Add(obj); err != nil {
+						runtime.HandleError(fmt.Errorf(&quot;unable to queue %T: %v&quot;, obj, err))
+					}
+				},
+			...
+			},
+		},
+	)
+}
+</code></pre>
+
+<p>Back to the <code>scheduleOne()</code> function above, <code>sched.schedule(pod)</code> handles (calls) the actual scheduling based on predicates and priorities.</p>
+
+<pre><code>// schedule implements the scheduling algorithm and returns the suggested host.
+func (sched *Scheduler) schedule(pod *v1.Pod) (string, error) {
+	host, err := sched.config.Algorithm.Schedule(pod, sched.config.NodeLister)
+	...
+	return host, err
+}
+</code></pre>
+
+<p><code>generic_scheduler.go</code> implements the <code>algorithm.ScheduleAlgorithm</code> interface (in the code snippet called via <code>sched.config.Algorithm.Schedule</code>). And here it gets even more interesting.<br />
+Both, <code>UpdateNodeNameToInfoMap()</code> and <code>findNodesThatFit()</code>, take a <code>genericScheduler.cachedNodeInfoMap</code> as an argument, which is of type <code>map[string]*schedulercache.NodeInfo</code>.</p>
+
+<pre><code>// Schedule tries to schedule the given pod to one of node in the node list.
+// If it succeeds, it will return the name of the node.
+// If it fails, it will return a Fiterror error with reasons.
+func (g *genericScheduler) Schedule(pod *v1.Pod, nodeLister algorithm.NodeLister) (string, error) {
+	...
+        nodes, err := nodeLister.List()
+        ...
+	// Used for all fit and priority funcs.
+	err = g.cache.UpdateNodeNameToInfoMap(g.cachedNodeInfoMap)
+	if err != nil {
+		return &quot;&quot;, err
+	}
+
+	trace.Step(&quot;Computing predicates&quot;)
+	filteredNodes, failedPredicateMap, err := findNodesThatFit(pod, g.cachedNodeInfoMap, nodes, g.predicates, g.extenders, g.predicateMetaProducer, g.equivalenceCache)
+	if err != nil {
+		return &quot;&quot;, err
+	}
+        ...
+
+	return g.selectHost(priorityList)
+}
+</code></pre>
+
+<p>What is <code>NodeInfo</code> about? It is the scheduler&rsquo;s view of each node. The <code>NodeInfo</code> struct reveals the following:</p>
+
+<pre><code>type NodeInfo struct {
+	// Overall node information.
+	node *v1.Node
+
+	pods             []*v1.Pod
+	podsWithAffinity []*v1.Pod
+	usedPorts        map[int]bool
+
+	// Total requested resource of all pods on this node.
+	// It includes assumed pods which scheduler sends binding to apiserver but
+	// didn't get it as scheduled yet.
+	requestedResource *Resource
+	nonzeroRequest    *Resource
+	// We store allocatedResources (which is Node.Status.Allocatable.*) explicitly
+	// as int64, to avoid conversions and accessing map.
+	allocatableResource *Resource
+	...
+}
+</code></pre>
+
+<p>For each node, <code>requestedResource</code> is where the scheduler caches the information about how many resources have been requested (are guaranteed), taking into account the node exposed <code>allocatableResource</code> mentioned in the beginning of this post. So the final question is, how does <code>requestedResource</code> get initially populated, e.g. after a crash? Because this is what should be done in order to feed the scheduling algorithm with correct information about the resource capacity of the Kubelet (<code>NodeInfo</code>). We&rsquo;re back at the <code>NewConfigFactory(...)</code> function we have already seen. This time we look at the <code>EventHandlers</code> which use a <code>FilterFunc</code> &ldquo;<code>assignedNonTerminatedPod</code>&rdquo;. From the function documentation:</p>
+
+<pre><code>// assignedNonTerminatedPod selects pods that are assigned and non-terminal (scheduled and running).
+</code></pre>
+
+<p>Basically, this function looks for running pods in the cluster. The <code>ResourceEventHandlerFuncs</code> in <code>NewConfigFactory(...)</code> update the scheduler cache based on this information.</p>
+
+<pre><code>// NewConfigFactory initializes the default implementation of a Configurator To encourage eventual privatization of the struct type, we only
+// return the interface.
+func NewConfigFactory(...) scheduler.Configurator {
+	...
+	c.scheduledPodsHasSynced = podInformer.Informer().HasSynced
+	// scheduled pod cache
+	podInformer.Informer().AddEventHandler(
+		cache.FilteringResourceEventHandler{
+			FilterFunc: func(obj interface{}) bool {
+				switch t := obj.(type) {
+				case *v1.Pod:
+					return assignedNonTerminatedPod(t)
+				default:
+					runtime.HandleError(fmt.Errorf(&quot;unable to handle object in %T: %T&quot;, c, obj))
+					return false
+				}
+			},
+			Handler: cache.ResourceEventHandlerFuncs{
+				AddFunc:    c.addPodToCache,
+				UpdateFunc: c.updatePodInCache,
+				DeleteFunc: c.deletePodFromCache,
+			},
+		},
+	)
+	...
+}
+</code></pre>
+
+<p>All Add/Update/Delete <code>EventHandlerFuncs</code> call into their related cache functions. As an example:</p>
+
+<pre><code>func (c *ConfigFactory) addPodToCache(obj interface{}) {
+	...
+	if err := c.schedulerCache.AddPod(pod); err != nil {
+		glog.Errorf(&quot;scheduler cache AddPod failed: %v&quot;, err)
+	}
+	...
+}
+</code></pre>
+
+<p>This calls into the corresponding function in <code>schedulerCache</code> which calls an unexported function <code>addPod(pod *v1.Pod)</code>. This function calls <code>n.AddPod(pod)</code> to update the node information based on a <code>NodeInfo</code> struct.</p>
+
+<pre><code>func (cache *schedulerCache) addPod(pod *v1.Pod) {
+	n, ok := cache.nodes[pod.Spec.NodeName]
+	if !ok {
+		n = NewNodeInfo()
+		cache.nodes[pod.Spec.NodeName] = n
+	}
+	n.AddPod(pod)
+}
+</code></pre>
+
+<p>And finally, we can see where <code>requestedResource</code>, the actual consumed (requested) resources on the node (Kubelet), gets populated.</p>
+
+<p>State reconciliation:  done :)</p>
+
+<pre><code>// AddPod adds pod information to this NodeInfo.
+func (n *NodeInfo) AddPod(pod *v1.Pod) {
+	res, non0_cpu, non0_mem := calculateResource(pod)
+	n.requestedResource.MilliCPU += res.MilliCPU
+	n.requestedResource.Memory += res.Memory
+	n.requestedResource.NvidiaGPU += res.NvidiaGPU
+	n.requestedResource.EphemeralStorage += res.EphemeralStorage
+	...
+}
+</code></pre>
+
+<p>Long story short: reconciliation of the scheduler state, so to say, is based on setting watches on the API server. During startup these watch functions trigger, the scheduler cache gets populated with the current node state (capacity/requested resources) and uses this information to correctly schedule any pending pods.</p>
+
+<p>You might wonder, what if there&rsquo;s something wrong with the cache or events are missed? We&rsquo;re living in a distributed system and there is always the likelihood of inconsistencies. Fortunately, the Kubelet is the last mile and does &ldquo;final&rdquo; admission, based on predicates (e.g. remaining node capacity). So even if the scheduler would make a wrong binding, QoS enforcement is guaranteed by the Kubelet.</p>
+
+<h2 id="a-final-note-on-running-multiple-schedulers">A final note on running multiple schedulers</h2>
+
+<p>Running multiple distinct schedulers in Kubernetes is another proof of the extensibility Kubernetes offers - by design. But those schedulers do not share <code>requestedResource</code> metrics. This results in an optimistically shared state scheduling environment, where conflicts need to be detected and resolved. Xiaoning Ding (Huawei) did a great presentation on this topic last year at KubeCon Seattle: <a href="https://www.youtube.com/watch?v=avORKrcyctM">&ldquo;Running Multiple Schedulers in Kubernetes&rdquo;</a>. If you&rsquo;re interested in this topic, make sure to watch the talk.</p>
+
+<p>Alright, you&rsquo;re still here! Thank you for reading this article. If you found any inconsistencies, &ldquo;bugs&rdquo; or if I was not clear enough, ping me on <a href="https://twitter.com/embano1">Twitter</a> and let me know.</p>
+
+<p>As always, feel free to share and spread the word!</p>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+
+
+
+
+
+
+
+
+<figure class="author-image">
+    <a class="img" href="https://embano1.github.io/" style="background-image: url(/images/gopher.jpg)"><span class="hidden">Michael Gasch's Picture</span></a>
+</figure>
+
+
+<section class="author">
+  <h4><a href="https://embano1.github.io/">Michael Gasch</a></h4>
+  
+  <p>Read <a href="https://embano1.github.io/">more posts</a> by this author.</p>
+  
+  <div class="author-meta">
+    <span class="author-location icon-location">Germany</span>
+    
+  </div>
+</section>
+
+
+
+
+    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=QoS%2c%20%22Node%20allocatable%22%20and%20the%20Kubernetes%20Scheduler&nbsp;-&nbsp;Do%20not%20go%20gentle%20into%20this%20good%20night.%20Rage.&amp;url=https%3a%2f%2fembano1.github.io%2fpost%2fsched-reconcile%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fembano1.github.io%2fpost%2fsched-reconcile%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fembano1.github.io%2fpost%2fsched-reconcile%2f&amp;description=QoS%2c%20%22Node%20allocatable%22%20and%20the%20Kubernetes%20Scheduler"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fembano1.github.io%2fpost%2fsched-reconcile%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+    
+
+
+
+
+
+
+
+  </footer>
+</article>
+
+</main>
+
+
+  <aside class="read-next">
+  
+  
+      <a class="read-next-story prev" style="no-cover" href="https://embano1.github.io/post/vpa/">
+          <section class="post">
+              <h2>Kubernetes and the fine art of scaling - UP!</h2>
+          </section>
+      </a>
+  
+</aside>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Do not go gentle into this good night. Rage.</a> All rights reserved - 2017</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="https://embano1.github.io/js/jquery.js"></script>
+    <script type="text/javascript" src="https://embano1.github.io/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://embano1.github.io/js/index.js"></script>
+    
+</body>
+</html>
+
