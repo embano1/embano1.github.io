@@ -54,7 +54,7 @@
     
 
     
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/styles/default.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/styles/ocean.min.css">
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
         
         <script>hljs.initHighlightingOnLoad();</script>
@@ -66,7 +66,7 @@
       
       
     
-    <meta name="generator" content="Hugo 0.25.1" />
+    <meta name="generator" content="Hugo 0.30.2" />
 
     <link rel="canonical" href="https://embano1.github.io/post/sched-reconcile/" />
 
@@ -233,7 +233,7 @@
 
 <p>The customer was wondering why the &ldquo;Allocatable&rdquo; resources (CPU, MEM) on the Kubelet would not be reduced when he starts &ldquo;burstable&rdquo; or &ldquo;guaranteed&rdquo; pods, i.e. pods with resource requests specified. As you are probably aware, &ldquo;requests&rdquo; are enforced by the scheduler/Kubelet during admission in order to guarantee the requested resource(s). Let&rsquo;s use a short example (Minikube) to show what I&rsquo;m talking about. All examples and code snippets are based on <code>Kubernetes v1.7.8</code>.</p>
 
-<pre><code>~# kubectl describe node|grep -iA 3 allocatable
+<pre><code class="language-Bash">~# kubectl describe node|grep -iA 3 allocatable
 Allocatable:
  cpu:		4
  memory:	3944188Ki
@@ -249,7 +249,7 @@ deployment &quot;nginx3&quot; created
 <p>We see that the node reports an allocatable capacity of 4 CPUs and we launch 10 pods, each with 0.5 CPU requests to see what happens when we exceed capacity.<br />
 Hint: You can also query the node information via the API server under <code>http://&lt;API_SERVER&gt;:8001/api/v1/nodes</code>.</p>
 
-<pre><code>~# kubectl get po
+<pre><code class="language-Bash">~# kubectl get po
 NAME                      READY     STATUS    RESTARTS   AGE
 nginx1-288498491-63wxf    1/1       Running   0          26s
 nginx10-177349531-57mqp   0/1       Pending   0          24s
@@ -271,7 +271,7 @@ nginx9-2085233483-mxsc6   0/1       Pending   0          24s
 
 <p>Apparently, the scheduler is doing its job and refuses to schedule all pods onto this node because this would exceed the node capacity and break the resource guarantee (QoS). However, and this is what confused the customer, the node still reports 4 CPUs as allocatable:</p>
 
-<pre><code>~# kubectl describe node|grep -iA 3 allocatable
+<pre><code class="language-Bash">~# kubectl describe node|grep -iA 3 allocatable
 Allocatable:
  cpu:		4
  memory:	3944188Ki
@@ -454,7 +454,7 @@ func NewConfigFactory(...) scheduler.Configurator {
 
 <p>This calls into the corresponding function in <code>schedulerCache</code> which calls an unexported function <code>addPod(pod *v1.Pod)</code>. This function calls <code>n.AddPod(pod)</code> to update the node information based on a <code>NodeInfo</code> struct.</p>
 
-<pre><code>func (cache *schedulerCache) addPod(pod *v1.Pod) {
+<pre><code class="language-go">func (cache *schedulerCache) addPod(pod *v1.Pod) {
 	n, ok := cache.nodes[pod.Spec.NodeName]
 	if !ok {
 		n = NewNodeInfo()
@@ -549,6 +549,27 @@ func (n *NodeInfo) AddPod(pod *v1.Pod) {
 
 
     
+
+<div id="disqus_thread"></div>
+<script>
+
+
+
+
+var disqus_config = function () {
+this.page.url = "https:\/\/embano1.github.io\/post\/sched-reconcile\/";  
+this.page.identifier = "https:\/\/embano1.github.io\/post\/sched-reconcile\/"; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://embano1.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
 
 
 
