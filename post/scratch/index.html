@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="Inside Docker&#39;s &#34;FROM scratch&#34;"/>
+<meta name="twitter:description" content=""/>
+<meta name="twitter:site" content="@embano1"/>
+
+
+
+  	<meta property="og:title" content="Inside Docker&#39;s &#34;FROM scratch&#34; &middot; Do not go gentle into this good night. Rage." />
+  	<meta property="og:site_name" content="Do not go gentle into this good night. Rage." />
+  	<meta property="og:url" content="https://embano1.github.io/post/scratch/" />
+
+    
+        
+            <meta property="og:image" content="/none.jpg"/>
+        
+    
+
+    
+    <meta property="og:description" content="" />
+  	<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2017-11-21T21:18:04&#43;01:00" />
+
+    
+    
+
+    <title>Inside Docker&#39;s &#34;FROM scratch&#34; &middot; Do not go gentle into this good night. Rage.</title>
+
+    
+    <meta name="description" content="The idea to this post was triggered by Julia Evans &amp;ldquo;So you want to be a wizard&amp;rdquo;&amp;hellip;
+Thanks to Ajeet, Bjoern and Timo for your input and review.
+" />
+    
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="https://embano1.github.io/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="https://embano1.github.io/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="https://embano1.github.io/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="https://embano1.github.io/css/nav.css" />
+
+    
+
+    
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/styles/ocean.min.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+        
+        <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+      
+          <link href="https://embano1.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Do not go gentle into this good night. Rage." />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.30.2" />
+
+    <link rel="canonical" href="https://embano1.github.io/post/scratch/" />
+
+    
+      
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": ,
+        "logo": https://embano1.github.io/images/gopher.jpg
+    },
+    "author": {
+        "@type": "Person",
+        "name": ,
+        
+        "image": {
+            "@type": "ImageObject",
+            "url": https://embano1.github.io/images/gopher.jpg,
+            "width": 250,
+            "height": 250
+        }, 
+        
+        "url": ,
+        "sameAs": [
+            
+            
+             
+             
+             
+             
+             
+            
+        ]
+    },
+    "headline": Inside Docker&#39;s &#34;FROM scratch&#34;,
+    "name": Inside Docker&#39;s &#34;FROM scratch&#34;,
+    "wordCount": 1385,
+    "timeRequired": "PT7M",
+    "inLanguage": {
+      "@type": "Language",
+      "alternateName": en
+    },
+    "url": https://embano1.github.io/post/scratch/,
+    "datePublished": 2017-11-21T21:18Z,
+    "dateModified": 2017-11-21T21:18Z,
+    
+    
+    "description": ,
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": https://embano1.github.io/post/scratch/
+    }
+}
+    </script>
+    
+
+
+    
+
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-108156810-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://embano1.github.io/about">About me</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://embano1.github.io/post">Blog</a>
+            </li>
+        
+        
+    </ul>
+
+    
+    <a class="subscribe-button icon-feed" href="https://embano1.github.io/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+      <a class="blog-logo" href="https://embano1.github.io/"><img src="https://embano1.github.io/images/gopher.jpg" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">Inside Docker&#39;s &#34;FROM scratch&#34;</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2017-11-21T21:18:04&#43;01:00">
+            Nov 21, 2017
+          </time>
+        
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+      
+
+<p>The idea to this post was triggered by Julia Evans &ldquo;So you want to be a wizard&rdquo;&hellip;</p>
+
+<p>Thanks to <a href="https://twitter.com/ajeetsraina">Ajeet</a>, <a href="https://twitter.com/bbrundert">Bjoern</a> and <a href="https://twitter.com/timoreimann">Timo</a> for your input and review.</p>
+
+<h2 id="wizard-skill-understand-your-abstractions-sometimes-julia-evans">&ldquo;Wizard skill: Understand your abstractions (sometimes)&rdquo; - Julia Evans</h2>
+
+<p>Statically compiled languages, like <a href="https://golang.org/">Go</a>, are quiet popular these days. In combination with another blockbuster technology, Docker containers, a big advantage is the minimal size of the resulting container image. This can be achieved by using the special (and reserved) Docker <code>scratch</code> image.</p>
+
+<blockquote>
+<p>This image is most useful in the context of building base images (such as debian and busybox) or super minimal images (that contain only a single binary and whatever it requires, such as hello-world). (Source: Docker)</p>
+</blockquote>
+
+<p>There are other reasons, besides the resulting image size, why you would want to use this <em>special</em> image as your base layer:</p>
+
+<ul>
+<li>Reduced dependencies (layers) on other images</li>
+<li>Reduced attack surface because only what´s really needed to execute your application is in the image</li>
+<li>Pull and startup times are minimal</li>
+</ul>
+
+<h2 id="in-linux-everything-is-a-file-descriptor">&ldquo;In Linux, everything is a file (descriptor)&rdquo;</h2>
+
+<p>OK, but what´s actually in this base layer? Really nothing? But there must be something inside. Like a basic runtime a Linux process might depend on. E.g. <code>/etc/host*</code> for name resolution, <code>dev</code> for file descriptors (<code>STDIN/OUT/ERR</code>), or pseudo-filesystems to query information (<code>/proc</code> and <code>/sys</code>)?!? Don&rsquo;t get me wrong. Not every process needs them. But a typical user process might assume those exist and thus <code>scratch</code> at least should incorporate them, no?</p>
+
+<p>Are these files and filesystems injected during the build phase or mounted during creation of the corresponding container instance? Put simply, how does it look like inside a container built <code>&quot;FROM scratch&quot;</code>? Let´s try to pull and extract the image:</p>
+
+<pre><code class="language-bash">~ docker pull scratch
+Using default tag: latest
+Error response from daemon: 'scratch' is a reserved name
+</code></pre>
+
+<p>Hm, that didn´t work. Let´s cheat:</p>
+
+<pre><code class="language-bash"># We need an empty dummy file and of course a Dockerfile for &quot;docker build&quot; to work
+~ touch test
+~ cat &lt;&lt;EOF &gt; Dockerfile
+FROM scratch
+COPY test .
+EOF
+
+# Build
+~ docker build -t scratchtest .
+~ docker images scratchtest
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+scratchtest         latest              9860662f4cfc        12 seconds ago      0B &lt;-- &quot;Zero Bytes&quot;
+</code></pre>
+
+<p>Indeed, the container image is of zero bytes size. Good. Let&rsquo;s be 100% sure and extract the image:</p>
+
+<pre><code class="language-bash"># Save image to a tar file
+~ docker save -o scratchtest.tar scratchtest
+
+# Untar and change into image folder
+~ tar xvf scratchtest.tar
+~ cd 7f576d166b7d57e1db38033c08aba53190dc94aea1f04761e1fb41b4ed75b592 # your ID will be different
+
+# Check what's in layer.tar
+~ tar tvf layer.tar
+-rw-r--r--  0 0      0           0 20 Nov 14:46 test
+</code></pre>
+
+<p>OK. The promise of <code>scratch</code> is real. There&rsquo;s nothing inside a scratch container, besides the file(s) we add. But we won&rsquo;t stop here, because we&rsquo;re curious explorers, right? Let´s build the most simple program, put it into a <code>scratch</code> container, run it and have a look inside.</p>
+
+<h2 id="here-comes-sleep-latest">Here comes <code>sleep:latest</code></h2>
+
+<pre><code class="language-bash">~ cat &lt;&lt;EOF &gt;main.go
+package main
+
+import &quot;time&quot;
+
+func main() {
+        time.Sleep(time.Hour)
+}
+EOF
+
+# Build binary for Linux
+~ GOOS=linux go build -o sleep main.go
+</code></pre>
+
+<pre><code class="language-bash"># Create our Dockerfile again
+~ cat &lt;&lt;EOF &gt; Dockerfile
+FROM scratch
+COPY sleep /
+ENTRYPOINT [&quot;/sleep&quot;]
+EOF
+
+# Build the container
+~ docker build -t sleep .
+</code></pre>
+
+<pre><code class="language-bash"># Run container
+~ docker run --rm --name sleep sleep
+
+# Get PID of the &quot;sleep&quot; process 
+~ PID=$(docker inspect -f '{{.State.Pid}}' sleep)
+</code></pre>
+
+<p>Now, let&rsquo;s look inside our running container. These commands only work if you run them <strong>on</strong> the Docker engine host. Beware, Docker for OSX uses a <a href="https://github.com/mist64/xhyve">xhyve</a> virtual machine. See the end of this post for a workaround.</p>
+
+<pre><code class="language-bash">~ cd /proc/$PID/root
+~ ls -al
+total 1064
+drwxr-xr-x   10 root     root          4096 Nov 19 21:34 .
+drwxr-xr-x   10 root     root          4096 Nov 19 21:34 ..
+-rwxr-xr-x    1 root     root             0 Nov 19 21:34 .dockerenv
+drwxr-xr-x    5 root     root           340 Nov 19 21:34 dev
+drwxr-xr-x    2 root     root          4096 Nov 19 21:34 etc
+dr-xr-xr-x  118 root     root             0 Nov 19 21:34 proc
+-rwxr-xr-x    1 root     root       1074119 Nov 19 21:27 sleep &lt;-- our binary from the Dockerfile
+dr-xr-xr-x   13 root     root             0 Nov 19 21:34 sys
+</code></pre>
+
+<p>Interesting! There is indeed more inside our scratch container than a <code>docker save</code> would have shown us. Where do these entries come from? The answer lies in your container runtime implementation. Since this example is based on building containers <code>&quot;FROM scratch&quot;</code> with Docker, consequently I used the Docker engine (Community Edition 17.09). Internally, this uses runC (libcontainer). This can be confusing and <a href="https://youtu.be/sK5i-N34im8?t=38m0s">this</a> part in Jérôme Petazzoni&rsquo;s talk explains it pretty well. The whole talk is worth watching, especially if you&rsquo;re not familiar with containers.</p>
+
+<p>Back to our situation. The folders and files you see above are actually the root filesystem (<code>rootfs</code>) of our Docker container <em>instance</em>, when created with the default configuration. This is specified in the <a href="https://github.com/opencontainers/runc/blob/master/libcontainer/SPEC.md">runC libcontainer spec v1</a>, which follows the OCI runtime <a href="https://github.com/opencontainers/runtime-spec">specification</a>. To quote from the libcontainer spec:</p>
+
+<blockquote>
+<p>A root filesystem must be provided to a container for execution.  The container
+will use this root filesystem (rootfs) to jail and spawn processes inside where
+the binaries and system libraries are local to that directory.  Any binaries
+to be executed must be contained within this rootfs.</p>
+
+<p>Mounts that happen inside the container are automatically cleaned up when the
+container exits as the mount namespace is destroyed and the kernel will
+unmount all the mounts that were setup within that namespace.<br />
+For a container to execute properly there are certain filesystems that
+are required to be mounted within the rootfs that the runtime will setup.</p>
+
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Type</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>/proc</td>
+<td>proc</td>
+</tr>
+
+<tr>
+<td>/dev</td>
+<td>tmpfs</td>
+</tr>
+
+<tr>
+<td>/dev/shm</td>
+<td>tmpfs</td>
+</tr>
+
+<tr>
+<td>/dev/mqueue</td>
+<td>mqueue</td>
+</tr>
+
+<tr>
+<td>/dev/pts</td>
+<td>devpts</td>
+</tr>
+
+<tr>
+<td>/sys</td>
+<td>sysfs</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+
+<p>There are extra runtime files, like those in <code>/etc</code>, which are also taken care of. If you want to look at the code for how this is done in libcontainer, <a href="https://github.com/opencontainers/runc/blob/v1.0.0-rc4/libcontainer/rootfs_linux.go#L162">here&rsquo;s</a> the initial call to mount the <code>/proc</code> filesystem into the container&rsquo;s root filesystem (<code>/</code>):</p>
+
+<pre><code>func mountToRootfs(m *configs.Mount, rootfs, mountLabel string) error {
+	...
+
+	switch m.Device {
+	case &quot;proc&quot;, &quot;sysfs&quot;:
+		if err := os.MkdirAll(dest, 0755); err != nil {
+			return err
+		}
+		// Selinux kernels do not support labeling of /proc or /sys
+		return mountPropagate(m, rootfs, &quot;&quot;)
+</code></pre>
+
+<h2 id="how-to-access-the-scratch-container-on-osx-or-if-your-docker-engine-host-runs-on-a-remote-machine">How to access the scratch container on OSX or if your Docker engine host runs on a remote machine</h2>
+
+<p>If you try the above steps on OSX, or you don&rsquo;t have direct CLI access to the engine&rsquo;s host OS, use the following workaround:</p>
+
+<pre><code class="language-bash"># Since we don't have a shell in our &quot;sleep&quot; container, use a debugging container which runs in the &quot;sleep&quot; namespaces
+~ docker run --rm -it --pid container:sleep alpine
+
+# Here, &quot;sleep&quot; is Pid1 (namespaces!)
+~ cd /proc/1/root
+~ ls -al
+total 1064
+drwxr-xr-x   10 root     root          4096 Nov 19 21:34 .
+drwxr-xr-x   10 root     root          4096 Nov 19 21:34 ..
+-rwxr-xr-x    1 root     root             0 Nov 19 21:34 .dockerenv
+drwxr-xr-x    5 root     root           340 Nov 19 21:34 dev
+drwxr-xr-x    2 root     root          4096 Nov 19 21:34 etc
+dr-xr-xr-x  118 root     root             0 Nov 19 21:34 proc
+-rwxr-xr-x    1 root     root       1074119 Nov 19 21:27 sleep
+dr-xr-xr-x   13 root     root             0 Nov 19 21:34 sys
+
+~ ls -al etc
+total 20
+drwxr-xr-x    2 root     root          4096 Nov 19 21:34 .
+drwxr-xr-x   10 root     root          4096 Nov 19 21:34 ..
+-rw-r--r--    1 root     root            13 Nov 19 21:34 hostname
+-rw-r--r--    1 root     root           174 Nov 19 21:34 hosts
+lrwxrwxrwx    1 root     root            12 Nov 19 21:34 mtab -&gt; /proc/mounts
+-rw-r--r--    1 root     root           153 Nov 19 21:34 resolv.conf
+</code></pre>
+
+<h2 id="wrapping-up">Wrapping up</h2>
+
+<p>First of all it&rsquo;s important to make the distincation between a container <em>image</em> and container <em>instance</em>. As you have seen in this example, the latter is more than the sum of the Dockerfile pieces.</p>
+
+<p>I think it can also be quite interesting to take a look inside the <em>live</em> environment of a container instance which has been built <code>&quot;FROM scratch&quot;</code>. This helps to understand potential pitfalls and what to take into account for troubleshooting containers. Something we&rsquo;re going to look at in the next blog post, which will focus on Linux Kernel Control Groups, aka <code>cgroups</code>. Stay tuned!</p>
+
+<p>As always, feel free to share or reach out, e.g. on <a href="https://twitter.com/embano1">Twitter</a>.</p>
+
+<h2 id="further-recommended-reading-and-viewing">Further recommended reading and viewing</h2>
+
+<p>Manual Page: user_namespaces - overview of Linux user namespaces<br />
+<a href="http://man7.org/linux/man-pages/man7/user_namespaces.7.html">http://man7.org/linux/man-pages/man7/user_namespaces.7.html</a></p>
+
+<p>Containers from Scratch<br />
+<a href="https://ericchiang.github.io/post/containers-from-scratch/">https://ericchiang.github.io/post/containers-from-scratch/</a></p>
+
+<p>What Have Namespaces Done for You Lately?<br />
+<a href="https://www.youtube.com/watch?v=MHv6cWjvQjM">https://www.youtube.com/watch?v=MHv6cWjvQjM</a></p>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+
+
+
+
+
+
+
+
+<figure class="author-image">
+    <a class="img" href="https://embano1.github.io/" style="background-image: url(/images/gopher.jpg)"><span class="hidden">Michael Gasch's Picture</span></a>
+</figure>
+
+
+<section class="author">
+  <h4><a href="https://embano1.github.io/">Michael Gasch</a></h4>
+  
+  <p>Read <a href="https://embano1.github.io/">more posts</a> by this author.</p>
+  
+  <div class="author-meta">
+    <span class="author-location icon-location">Germany</span>
+    
+  </div>
+</section>
+
+
+
+
+    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Inside%20Docker%27s%20%22FROM%20scratch%22&nbsp;-&nbsp;Do%20not%20go%20gentle%20into%20this%20good%20night.%20Rage.&amp;url=https%3a%2f%2fembano1.github.io%2fpost%2fscratch%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fembano1.github.io%2fpost%2fscratch%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fembano1.github.io%2fpost%2fscratch%2f&amp;description=Inside%20Docker%27s%20%22FROM%20scratch%22"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fembano1.github.io%2fpost%2fscratch%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+    
+
+<div id="disqus_thread"></div>
+<script>
+
+
+
+
+var disqus_config = function () {
+this.page.url = "https:\/\/embano1.github.io\/post\/scratch\/";  
+this.page.identifier = "https:\/\/embano1.github.io\/post\/scratch\/"; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://embano1.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+
+  </footer>
+</article>
+
+</main>
+
+
+  <aside class="read-next">
+  
+  
+      <a class="read-next-story prev" style="no-cover" href="https://embano1.github.io/post/sched-reconcile/">
+          <section class="post">
+              <h2>QoS, &#34;Node allocatable&#34; and the Kubernetes Scheduler</h2>
+          </section>
+      </a>
+  
+</aside>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Do not go gentle into this good night. Rage.</a> All rights reserved - 2017</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="https://embano1.github.io/js/jquery.js"></script>
+    <script type="text/javascript" src="https://embano1.github.io/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://embano1.github.io/js/index.js"></script>
+    
+</body>
+</html>
+

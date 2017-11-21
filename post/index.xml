@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>All rights reserved - 2017</copyright>
-    <lastBuildDate>Tue, 17 Oct 2017 22:04:27 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 21 Nov 2017 21:18:04 +0100</lastBuildDate>
     
 	<atom:link href="https://embano1.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Inside Docker&#39;s &#34;FROM scratch&#34;</title>
+      <link>https://embano1.github.io/post/scratch/</link>
+      <pubDate>Tue, 21 Nov 2017 21:18:04 +0100</pubDate>
+      
+      <guid>https://embano1.github.io/post/scratch/</guid>
+      <description>The idea to this post was triggered by Julia Evans &amp;ldquo;So you want to be a wizard&amp;rdquo;&amp;hellip;
+Thanks to Ajeet, Bjoern and Timo for your input and review.
+&amp;ldquo;Wizard skill: Understand your abstractions (sometimes)&amp;rdquo; - Julia Evans Statically compiled languages, like Go, are quiet popular these days. In combination with another blockbuster technology, Docker containers, a big advantage is the minimal size of the resulting container image. This can be achieved by using the special (and reserved) Docker scratch image.</description>
+    </item>
     
     <item>
       <title>QoS, &#34;Node allocatable&#34; and the Kubernetes Scheduler</title>
