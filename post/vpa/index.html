@@ -224,7 +224,7 @@ It so happened to me last week, when I first discussed the" />
 
 <p>DRS continuously monitors the distributed state of the cluster and virtual machines, making recommendations or taking action (whatever the vSphere admin decides) on which VMs to migrate between hosts. This could be due to resource contention, restoring (anti-) affinity relationships, policy drift, etc. This is done transparently without downtime for the guest operating system and services in the VMs. You can read more about DRS in this fantastic whitepaper <a href="https://labs.vmware.com/vmtj/vmware-distributed-resource-management-design-implementation-and-lessons-learned">&ldquo;VMware Distributed Resource Management: Design, Implementation, and Lessons Learned&rdquo;</a></p>
 
-<p>Now let get back to our initial topic, runtime optimizations for distributed services running on Kubernetes. The Kubernetes scheduler is fairly limited (today) when it comes to day two operations. It was made for day one, meaning finding resources (nodes) to assign pods to. It has improved significantly in the latest releases, especially around (anti-) affinity, priorities and multi-scheduler capabilities. But it´s still focused on the initial placement and does not (yet) care about runtime optimizations. Perhaps it won´t ever, and this will be a task of another controller (see below). It´s this separation of concerns I like in the design of Kubernetes.</p>
+<p>Now lets get back to our initial topic, runtime optimizations for distributed services running on Kubernetes. The Kubernetes scheduler is fairly limited (today) when it comes to day two operations. It was made for day one, meaning finding resources (nodes) to assign pods to. It has improved significantly in the latest releases, especially around (anti-) affinity, priorities and multi-scheduler capabilities. But it´s still focused on the initial placement and does not (yet) care about runtime optimizations. Perhaps it won´t ever, and this will be a task of another controller (see below). It´s this separation of concerns I like in the design of Kubernetes.</p>
 
 <p>When I was discussing a design for re-architecting a monolithic business service into smaller services at a customer last week, the following discussion came up. Your service consists of several autonomous units (i.e. microservices). You follow best practices for letting Kubernetes know their resource consumption, e.g. reservations and limits. You also think about inter and intra service relationships (bandwidth &amp; latency) and model them in form of pods as well as affinity settings. These get honored when the pods initially get scheduled.</p>
 
@@ -305,7 +305,8 @@ It so happened to me last week, when I first discussed the" />
     
 <section class="share">
   <h4>Share this post</h4>
-  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Kubernetes%20and%20the%20fine%20art%20of%20scaling%20-%20UP%21&nbsp;-&nbsp;Do%20not%20go%20gentle%20into%20this%20good%20night.%20Rage.&amp;url=https%3a%2f%2fembano1.github.io%2fpost%2fvpa%2f"
+  
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Kubernetes%20and%20the%20fine%20art%20of%20scaling%20-%20UP%21&amp;url=https%3a%2f%2fembano1.github.io%2fpost%2fvpa%2f"
       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
       <span class="hidden">Twitter</span>
   </a>
