@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>All rights reserved - 2017</copyright>
-    <lastBuildDate>Tue, 21 Nov 2017 21:18:04 +0100</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jan 2018 21:41:06 +0100</lastBuildDate>
     
 	<atom:link href="https://embano1.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Understanding and using the Kubernetes PodNodeSelector Admission Controller</title>
+      <link>https://embano1.github.io/post/podnodesel/</link>
+      <pubDate>Wed, 24 Jan 2018 21:41:06 +0100</pubDate>
+      
+      <guid>https://embano1.github.io/post/podnodesel/</guid>
+      <description>Thanks to Timo Reimann, Bjoern Brundert and Tom Schwaller for their feedback and improving this post.
+During a recent customer engagement, a discussion about Kubernetes NodeSelectors came up. There was some confusion about whether and how to use them for a multi-tenant cluster deployment. In the end, we decided to leverage the Kubernetes PodNodeSelector admission controller. Since not all implementation details were clear to me, I did some experiments and wanted to share my findings with you.</description>
+    </item>
     
     <item>
       <title>Inside Docker&#39;s &#34;FROM scratch&#34;</title>
