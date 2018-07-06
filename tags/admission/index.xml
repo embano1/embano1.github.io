@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Admission on Do not go gentle into this good night. Rage.</title>
+    <link>https://embano1.github.io/tags/admission/</link>
+    <description>Recent content in Admission on Do not go gentle into this good night. Rage.</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>All rights reserved - 2018</copyright>
+    <lastBuildDate>Wed, 24 Jan 2018 21:41:06 +0100</lastBuildDate>
+    
+	<atom:link href="https://embano1.github.io/tags/admission/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Understanding and using the Kubernetes PodNodeSelector Admission Controller</title>
+      <link>https://embano1.github.io/post/podnodesel/</link>
+      <pubDate>Wed, 24 Jan 2018 21:41:06 +0100</pubDate>
+      
+      <guid>https://embano1.github.io/post/podnodesel/</guid>
+      <description>Thanks to Timo Reimann, Bjoern Brundert and Tom Schwaller for their feedback and improving this post.
+During a recent customer engagement, a discussion about Kubernetes NodeSelectors came up. There was some confusion about whether and how to use them for a multi-tenant cluster deployment. In the end, we decided to leverage the Kubernetes PodNodeSelector admission controller. Since not all implementation details were clear to me, I did some experiments and wanted to share my findings with you.</description>
+    </item>
+    
+  </channel>
+</rss>

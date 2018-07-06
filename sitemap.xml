@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://embano1.github.io/post/tw/</loc>
+    <lastmod>2018-07-05T21:10:15+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://embano1.github.io/post/podnodesel/</loc>
     <lastmod>2018-01-24T21:41:06+01:00</lastmod>
   </url>
@@ -33,24 +38,91 @@
   </url>
   
   <url>
+    <loc>https://embano1.github.io/tags/admission/</loc>
+    <lastmod>2018-01-24T21:41:06+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://embano1.github.io/tags/autoscaling/</loc>
+    <lastmod>2017-07-31T22:17:38+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://embano1.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>https://embano1.github.io/tags/container/</loc>
+    <lastmod>2017-11-21T21:18:04+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://embano1.github.io/</loc>
+    <lastmod>2018-07-05T21:10:15+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://embano1.github.io/tags/docker/</loc>
+    <lastmod>2017-11-21T21:18:04+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://embano1.github.io/tags/json/</loc>
+    <lastmod>2018-07-05T21:10:15+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://embano1.github.io/tags/kubernetes/</loc>
+    <lastmod>2018-01-24T21:41:06+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://embano1.github.io/tags/labels/</loc>
     <lastmod>2018-01-24T21:41:06+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://embano1.github.io/post/</loc>
+    <lastmod>2018-07-05T21:10:15+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://embano1.github.io/tags/resources/</loc>
+    <lastmod>2017-07-31T22:17:38+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://embano1.github.io/tags/scheduling/</loc>
     <lastmod>2018-01-24T21:41:06+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>https://embano1.github.io/tags/scratch/</loc>
+    <lastmod>2017-11-21T21:18:04+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://embano1.github.io/tags/</loc>
+    <lastmod>2018-01-24T21:41:06+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://embano1.github.io/tags/twitter/</loc>
+    <lastmod>2018-07-05T21:10:15+02:00</lastmod>
     <priority>0</priority>
   </url>
   

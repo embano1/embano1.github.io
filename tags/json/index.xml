@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Json on Do not go gentle into this good night. Rage.</title>
+    <link>https://embano1.github.io/tags/json/</link>
+    <description>Recent content in Json on Do not go gentle into this good night. Rage.</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>All rights reserved - 2018</copyright>
+    <lastBuildDate>Thu, 05 Jul 2018 21:10:15 +0200</lastBuildDate>
+    
+	<atom:link href="https://embano1.github.io/tags/json/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>When Twitter Likes become your Bookmarks</title>
+      <link>https://embano1.github.io/post/tw/</link>
+      <pubDate>Thu, 05 Jul 2018 21:10:15 +0200</pubDate>
+      
+      <guid>https://embano1.github.io/post/tw/</guid>
+      <description>I confess, I&amp;rsquo;ve been (mis)using Twitter&amp;rsquo;s famous Like button since joining this great platform. Thus, if you look at my Twitter Likes you&amp;rsquo;ll mainly find tweets about distributed systems, Go and Kubernetes.
+Yes, I know it&amp;rsquo;s wrong! But looks like I am not the only one going down this dark path :) Unfortunately, if you have hundreds or thousands of bookmarks, ehm Likes, finding the one you desperately need is almost impossible due to the way the twitter.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Scheduling on Do not go gentle into this good night. Rage.</title>
+    <link>https://embano1.github.io/tags/scheduling/</link>
+    <description>Recent content in Scheduling on Do not go gentle into this good night. Rage.</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>All rights reserved - 2018</copyright>
+    <lastBuildDate>Wed, 24 Jan 2018 21:41:06 +0100</lastBuildDate>
+    
+	<atom:link href="https://embano1.github.io/tags/scheduling/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Understanding and using the Kubernetes PodNodeSelector Admission Controller</title>
+      <link>https://embano1.github.io/post/podnodesel/</link>
+      <pubDate>Wed, 24 Jan 2018 21:41:06 +0100</pubDate>
+      
+      <guid>https://embano1.github.io/post/podnodesel/</guid>
+      <description>Thanks to Timo Reimann, Bjoern Brundert and Tom Schwaller for their feedback and improving this post.
+During a recent customer engagement, a discussion about Kubernetes NodeSelectors came up. There was some confusion about whether and how to use them for a multi-tenant cluster deployment. In the end, we decided to leverage the Kubernetes PodNodeSelector admission controller. Since not all implementation details were clear to me, I did some experiments and wanted to share my findings with you.</description>
+    </item>
+    
+    <item>
+      <title>QoS, &#34;Node allocatable&#34; and the Kubernetes Scheduler</title>
+      <link>https://embano1.github.io/post/sched-reconcile/</link>
+      <pubDate>Tue, 17 Oct 2017 22:04:27 +0200</pubDate>
+      
+      <guid>https://embano1.github.io/post/sched-reconcile/</guid>
+      <description>What a title, sorry for that&amp;hellip;Weeks ago, I started a post about a customer question which came up during a workshop. I just didn´t find the time to finish it, because of &amp;hellip; other stuff. Also a BIG thanks to my Twitter fellows @bbrundert, @mhausenblas and @timoreimann for their review and feedback to improve this post. Make sure to follow them!
+Some useful background reading:  Managing Compute Resources for Containers How does the Kubernetes scheduler work?</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes and the fine art of scaling - UP!</title>
+      <link>https://embano1.github.io/post/vpa/</link>
+      <pubDate>Mon, 31 Jul 2017 22:17:38 +0200</pubDate>
+      
+      <guid>https://embano1.github.io/post/vpa/</guid>
+      <description>Do you know these days, when a certain topic you have thought about a while hits you again and again?
+It so happened to me last week, when I first discussed the topic of distributed runtime (read Kubernetes) optimization with Emad Benjamin, Chief Technologist/ Application Platforms at VMware (make sure to follow him on Twitter). The idea was mainly about day two operations for distributed systems written for and running on Kubernetes.</description>
+    </item>
+    
+  </channel>
+</rss>

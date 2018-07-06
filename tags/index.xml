@@ -6,10 +6,110 @@
     <description>Recent content in Tags on Do not go gentle into this good night. Rage.</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <copyright>All rights reserved - 2017</copyright>
+    <copyright>All rights reserved - 2018</copyright>
+    <lastBuildDate>Wed, 24 Jan 2018 21:41:06 +0100</lastBuildDate>
     
 	<atom:link href="https://embano1.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Admission</title>
+      <link>https://embano1.github.io/tags/admission/</link>
+      <pubDate>Wed, 24 Jan 2018 21:41:06 +0100</pubDate>
+      
+      <guid>https://embano1.github.io/tags/admission/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Autoscaling</title>
+      <link>https://embano1.github.io/tags/autoscaling/</link>
+      <pubDate>Mon, 31 Jul 2017 22:17:38 +0200</pubDate>
+      
+      <guid>https://embano1.github.io/tags/autoscaling/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Container</title>
+      <link>https://embano1.github.io/tags/container/</link>
+      <pubDate>Tue, 21 Nov 2017 21:18:04 +0100</pubDate>
+      
+      <guid>https://embano1.github.io/tags/container/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>https://embano1.github.io/tags/docker/</link>
+      <pubDate>Tue, 21 Nov 2017 21:18:04 +0100</pubDate>
+      
+      <guid>https://embano1.github.io/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Json</title>
+      <link>https://embano1.github.io/tags/json/</link>
+      <pubDate>Thu, 05 Jul 2018 21:10:15 +0200</pubDate>
+      
+      <guid>https://embano1.github.io/tags/json/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kubernetes</title>
+      <link>https://embano1.github.io/tags/kubernetes/</link>
+      <pubDate>Wed, 24 Jan 2018 21:41:06 +0100</pubDate>
+      
+      <guid>https://embano1.github.io/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Labels</title>
+      <link>https://embano1.github.io/tags/labels/</link>
+      <pubDate>Wed, 24 Jan 2018 21:41:06 +0100</pubDate>
+      
+      <guid>https://embano1.github.io/tags/labels/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Resources</title>
+      <link>https://embano1.github.io/tags/resources/</link>
+      <pubDate>Mon, 31 Jul 2017 22:17:38 +0200</pubDate>
+      
+      <guid>https://embano1.github.io/tags/resources/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scheduling</title>
+      <link>https://embano1.github.io/tags/scheduling/</link>
+      <pubDate>Wed, 24 Jan 2018 21:41:06 +0100</pubDate>
+      
+      <guid>https://embano1.github.io/tags/scheduling/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scratch</title>
+      <link>https://embano1.github.io/tags/scratch/</link>
+      <pubDate>Tue, 21 Nov 2017 21:18:04 +0100</pubDate>
+      
+      <guid>https://embano1.github.io/tags/scratch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Twitter</title>
+      <link>https://embano1.github.io/tags/twitter/</link>
+      <pubDate>Thu, 05 Jul 2018 21:10:15 +0200</pubDate>
+      
+      <guid>https://embano1.github.io/tags/twitter/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>
